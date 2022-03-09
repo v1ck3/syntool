@@ -1,5 +1,7 @@
 print ("SYNT00L by Vicky(telegram-@i_am_vicky_8055)")
 import scapy
+from IPy import IP
+
 
 # forge IP packet with target ip as the destination IP address
 ip = IP(dst=target_ip)
