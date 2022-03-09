@@ -20,3 +20,7 @@ pip install ___location of IPy file___
 
 IPy installation (reffered) :-
 https://stackoverflow.com/questions/38441889/get-nameerror-name-ip-is-not-defined-error-message
+
+Thanks me later !!!
+Yours,
+Vicky
